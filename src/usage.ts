@@ -16,14 +16,20 @@ interface CostRecord {
   model: string;
 }
 
-/** 尝试加载 node:sqlite，不可用时返回 null */
+/** 尝试加载 SQLite，优先 node:sqlite，回退 bun:sqlite (OpenCode 内嵌 Bun) */
 async function getDatabase(): Promise<unknown | null> {
+  // 优先 node:sqlite (Node 22.5+)
   try {
     const mod = await import("node:sqlite");
     return new (mod.DatabaseSync as new (path: string) => unknown)(DB_PATH);
-  } catch {
-    return null;
-  }
+  } catch {}
+  // 回退 bun:sqlite (Bun runtime，OpenCode 编译可执行文件)
+  try {
+    const bunSqlite = "bun:sqlite";
+    const mod = await (import(bunSqlite) as any);
+    return new mod.Database(DB_PATH);
+  } catch {}
+  return null;
 }
 
 /** 查询所有 Go 套餐用量记录 */
