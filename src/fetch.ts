@@ -8,10 +8,12 @@ import { rotate } from "./rotation.js";
 export function createGoFetch(
   store: KeyStore,
   onRotate: (newActive: string) => void,
+  syncStore?: () => void,
 ): (input: Request | string | URL, init?: RequestInit) => Promise<Response> {
   let rotating = false;
 
   return async (input: Request | string | URL, init?: RequestInit): Promise<Response> => {
+    syncStore?.();  // 同步 CLI 端修改
     const headers = new Headers(init?.headers);
     const activeEntry = store.keys.find((k) => k.name === store.active);
     if (activeEntry) {

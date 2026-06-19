@@ -59,7 +59,10 @@ export const OcGoMultiKeys: Plugin = async () => {
         return {
           apiKey: getActiveKey(store) || "placeholder",
           baseURL: GO_BASE_URL,
-          fetch: createGoFetch(store, onRotate),
+          fetch: createGoFetch(store, onRotate, () => {
+            const latest = loadStore();
+            Object.assign(store, latest);
+          }),
         };
       },
       methods: [
