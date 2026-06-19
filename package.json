@@ -31,5 +31,8 @@
     "typescript": "^5.9.3",
     "vitest": "^3.2.4"
   },
-  "files": ["dist/", "README.md", "LICENSE"]
+  "bin": {
+    "oc-go-keys": "./bin/oc-go-keys.js"
+  },
+  "files": ["dist/", "bin/", "README.md", "LICENSE"]
 }
