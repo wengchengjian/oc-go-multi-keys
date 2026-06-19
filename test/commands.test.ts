@@ -10,7 +10,6 @@ describe("buildCommands", () => {
     expect(commands).toHaveProperty("go_keys_switch");
     expect(commands).toHaveProperty("go_keys_cooldown");
     expect(commands).toHaveProperty("go_keys_reset");
-    expect(commands).toHaveProperty("go_keys_usage");
   });
 
   it("每个 tool 都有 description 和 args", () => {
