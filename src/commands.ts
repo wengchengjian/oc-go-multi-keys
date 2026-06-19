@@ -2,6 +2,7 @@ import { tool } from "@opencode-ai/plugin";
 import type { KeyStore } from "./types.js";
 import { addKey, removeKey, getActiveKey, cleanupCooldowns } from "./store.js";
 import { manualSwitch } from "./rotation.js";
+import { getUsageReport } from "./usage.js";
 
 export type StoreIO = {
   load(): KeyStore;
@@ -112,6 +113,14 @@ export function buildCommands(io?: StoreIO) {
         store.cooldowns = {};
         save(store);
         return "🔄 已清除所有冷却状态";
+      },
+    }),
+
+    go_keys_usage: tool({
+      description: "查询 OpenCode Go 套餐用量（Session/周/月）",
+      args: {},
+      async execute() {
+        return await getUsageReport();
       },
     }),
   };
