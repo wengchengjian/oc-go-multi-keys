@@ -1,2 +1,1 @@
-// index.ts (temporary placeholder for build verification)
-export const placeholder = "oc-go-multi-keys";
+export { OcGoMultiKeys, default } from "./src/index.js";
