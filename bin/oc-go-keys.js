@@ -80,6 +80,13 @@ function reset() {
   console.log("All cooldowns cleared");
 }
 
+function watch(interval) {
+  const sec = parseInt(interval) || 5;
+  console.clear();
+  list();
+  setInterval(() => { console.clear(); list(); }, sec * 1000);
+}
+
 // CLI routing
 const cmd = process.argv[2];
 const args = process.argv.slice(3);
@@ -106,6 +113,9 @@ switch (cmd) {
   case "reset":
     reset();
     break;
+  case "watch":
+    watch(args[0]);
+    break;
   default:
     console.log(`oc-go-keys — OpenCode Go plan multi-key manager
 
@@ -115,5 +125,6 @@ Usage:
   oc-go-keys rm <name>         Remove a key
   oc-go-keys switch <name>     Switch active key
   oc-go-keys cooldown [min]    Show/set cooldown minutes
-  oc-go-keys reset             Clear all cooldowns`);
+  oc-go-keys reset             Clear all cooldowns
+  oc-go-keys watch [sec]       Watch mode (default 5s)`);
 }
